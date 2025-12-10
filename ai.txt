@@ -1,0 +1,4 @@
+I used AI to help me find a different API to use other than Breezometer since it wasn’t working when I tried to
+sign up to get the key. It suggested Open meteo since it doesn’t need a key anyway so I used that API instead.
+I also used AI to help me figure out what cutoff number I should use for the pollen count, to figure out how much
+pollen would equate to the air being dirty enough to say it’s not a good day to wash the car. I used 50 grains/m3.

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiseWash Results</title>
+    <style>
+        :root {
+            --bg-gradient-start: #eff6ff;
+            --bg-gradient-end: #dbeafe;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --danger-bg: #fee2e2;
+            --danger-text: #991b1b;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .verdict-box {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .city-name {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* Verdict Styles */
+        .verdict-display {
+            margin: 2rem 0;
+        }
+
+        .verdict-title {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.05em;
+        }
+
+        .verdict-yes { color: #16a34a; }
+        .verdict-no { color: #dc2626; }
+
+        .verdict-desc {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+        }
+
+        /* Recommendation Box */
+        .recommendation {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            color: #0369a1;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-size: 1.1rem;
+            display: inline-block;
+        }
+
+        /* Forecast Table */
+        h3 {
+            margin-top: 3rem;
+            font-size: 1.25rem;
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        /* Row colors */
+        .good-row { background-color: rgba(220, 252, 231, 0.4); } /* Subtle green */
+        .bad-row { background-color: rgba(254, 226, 226, 0.4); } /* Subtle red */
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .badge-good { background-color: var(--success-bg); color: var(--success-text); }
+        .badge-wait { background-color: var(--danger-bg); color: var(--danger-text); }
+
+        .btn-link {
+            display: inline-block;
+            margin-top: 2.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .btn-link:hover { color: #1d4ed8; text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+    <div class="verdict-box">
+        <h2>Should you wash your car in <span class="city-name">{{ city }}</span>?</h2>
+
+        <div class="verdict-display">
+            {% if verdict == "YES" %}
+                <div class="verdict-title verdict-yes">YES</div>
+                <div class="verdict-desc">Conditions look good! Low chance of rain and low pollen.</div>
+            {% else %}
+                <div class="verdict-title verdict-no">NO</div>
+                <div class="verdict-desc">Wait for a better day. Rain or too much pollen detected.</div>
+
+                {% if best_day %}
+                    <div class="recommendation">
+                        📅 <strong>Recommended:</strong> Wash on <strong>{{ best_day }}</strong><br>
+                        {% if is_streak %}
+                            <span style="font-size: 0.9em; opacity: 0.9;">(Start of a good streak)</span>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p style="color: var(--text-muted); margin-top: 1rem;">No ideal wash days found in the next 5 days.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <h3>5-Day Wash Forecast</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Rain Chance</th>
+                        <th>Air Quality</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day in forecasts %}
+                        <tr class="{{ 'good-row' if day.recommendation == 'Good to Wash' else 'bad-row' }}">
+                            <td><strong>{{ day.date }}</strong></td>
+                            <td>{{ day.rain_pct }}%</td>
+                            <td>{{ day.pollen }}</td>
+                            <td>
+                                {% if day.recommendation == 'Good to Wash' %}
+                                    <span class="badge badge-good">Good to Wash</span>
+                                {% else %}
+                                    <span class="badge badge-wait">Wait</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="/" class="btn-link">← Search Another City</a>
+    </div>
+</body>
+</html>

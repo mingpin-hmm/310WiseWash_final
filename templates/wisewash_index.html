@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiseWash - Smart Car Wash Planner</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-gradient-start: #eff6ff;
+            --bg-gradient-end: #dbeafe;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --error-color: #dc2626;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+            color: #0f172a;
+        }
+
+        p.subtitle {
+            color: #64748b;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.2s;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: var(--primary-hover);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(1px);
+        }
+
+        .error {
+            background-color: #fef2f2;
+            color: var(--error-color);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #fee2e2;
+            font-size: 0.875rem;
+        }
+
+        .emoji-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="emoji-icon">🚗✨</span>
+        <h1>WiseWash</h1>
+        <p class="subtitle">Weather and pollen analysis to find the perfect day for a car wash.</p>
+
+        {% if error %}
+            <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form method="post">
+            <input type="text" name="city" placeholder="Enter city (e.g. Seattle, WA)" required autocomplete="off">
+            <input type="submit" value="Check Forecast">
+        </form>
+    </div>
+</body>
+</html>
