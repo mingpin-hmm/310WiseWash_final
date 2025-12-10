@@ -96,16 +96,15 @@ def find_best_wash_day(forecasts):
         if (future_days[i]['recommendation'] == "Good to Wash" and
                 future_days[i + 1]['recommendation'] == "Good to Wash" and
                 future_days[i + 2]['recommendation'] == "Good to Wash"):
-            return future_days[i]['date'], True  # True means it is a streak
+            return future_days[i]['date'], True
 
     for i in range(len(future_days) - 1):
         if (future_days[i]['recommendation'] == "Good to Wash" and
                 future_days[i + 1]['recommendation'] == "Good to Wash"):
-            return future_days[i]['date'], True  # True means it is a streak
-
+            return future_days[i]['date'], True
     for day in future_days:
         if day['recommendation'] == "Good to Wash":
-            return day['date'], False  # False means it is NOT a streak (only 1 day)
+            return day['date'], False
 
     return None
 
@@ -153,7 +152,6 @@ def index():
                                forecasts=forecast_results)
 
     return render_template("wisewash_index.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)
