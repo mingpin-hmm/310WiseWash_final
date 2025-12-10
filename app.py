@@ -10,7 +10,6 @@ ACCU_SEARCH_URL = f"{ACCU_BASE}/locations/v1/cities/search"
 ACCU_FORECAST_URL = f"{ACCU_BASE}/forecasts/v1/daily/5day/"
 OPEN_METEO_AIR_URL = "https://air-quality-api.open-meteo.com/v1/air-quality"
 
-
 def get_location_data(city_name):
     params = {'apikey': ACCUWEATHER_API_KEY, 'q': city_name}
     try:
