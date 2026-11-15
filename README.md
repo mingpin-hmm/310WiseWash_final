@@ -11,3 +11,5 @@ A key from Accuweather is required to use the API, Open meteo does not need an k
 
 Inside the project folder, create a file called "keys.py" and paste your key
 ACCUWEATHER_API_KEY = "PASTE_YOUR_ACCUWEATHER_KEY_HERE"
+
+This video demonstrates Wisewash being used: https://youtu.be/4ChYm1Zgh48
