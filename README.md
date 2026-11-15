@@ -1,6 +1,6 @@
 # 310 WiseWash final
 Wisewash helps users find out the best day to wash their cars, solving the frustation of washing their car and having it get dirty again by the rain right after. The application analyzes a 5 day forecast of rain and pollen data, provides a YES/NO answer whether to wash today, and if not, when the next best day is. 
-Our original project proposal aimed to process a 14 day forecast but due to limitations in the Accuweather API in the free tier, the forecast is reduced to 5 days.
+The original project proposal aimed to process a 14 day forecast but due to limitations in the Accuweather API in the free tier, the forecast is reduced to 5 days.
 
 HOW TO GET API KEY:
 A key from Accuweather is required to use the API, Open meteo does not need an key.
